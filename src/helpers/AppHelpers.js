@@ -6,8 +6,8 @@ const updateInput = (setState, currentInput) => {
   setState(prev => ({...prev, currentInput}));
 }
 
-const updateVidURL = (setState, youtubeURL) => {
-  setState(prev => ({...prev, youtubeURL}));
+const updateVidURL = (setState, finalInput) => {
+  setState(prev => ({...prev, finalInput}));
 }
 
 const AppHelpers = {
