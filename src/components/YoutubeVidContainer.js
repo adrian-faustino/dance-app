@@ -1,29 +1,35 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
+import YouTube from 'react-youtube';
 
 // helpers
 import { YT_API_Helpers } from '../helpers';
 
 // destructure
-const { parseVideoID } = YT_API_Helpers;
+const { parseVideoID, loopStart } = YT_API_Helpers;
 
 // constants
 const YT_API_KEY = process.env.REACT_APP_YT_API_KEY;
 
 // yt constants - set 0 to disable
-const loop = 1;
-const controls = 1;
+const PLAYER_HEIGHT = 390;
+const PLAYER_WIDTH = 640;
+
 
 export default function YoutubeVidContainer(props) {
   const { finalInput } = props;
 
   // state
   const [state, setState] = useState({
-    videoID: null
+    videoID: null,
+    start: 3,
+    end: 8,
+    controls: 1,
   });
-  const { videoID } = state;
+  const { videoID, start, end, controls } = state;
 
 
+  // handle user video search input
   useEffect(() => {
     if (finalInput) {
       if (finalInput.includes('youtube.com')) {
@@ -42,11 +48,24 @@ export default function YoutubeVidContainer(props) {
     }
   }, [finalInput]);
 
+
+  // YT Player settings
+  const opts = {
+    height: PLAYER_HEIGHT,
+    width: PLAYER_WIDTH,
+    playerVars: {
+      controls,
+      start,
+      end
+    },
+  };
+
   return (
     <div>
-      <iframe width="420" height="315"
-        src={`https://www.youtube.com/embed/${videoID}?playlist=${videoID}&loop=${loop}&controls=${controls}`}>
-      </iframe>
+      <YouTube 
+      videoId={videoID} 
+      opts={opts} 
+      onEnd={e => loopStart(e, start)} />
     </div>
   )
 }
