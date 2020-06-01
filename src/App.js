@@ -22,10 +22,10 @@ function App() {
 
   const [state, setState] = useState({
     currentInput: '',
-    youtubeURL: null,
+    finalInput: null,
   });
 
-  const { currentInput, youtubeURL } = state;
+  const { currentInput, finalInput } = state;
 
   return (
     <div className="App">
@@ -35,12 +35,13 @@ function App() {
       setState={setState}
       updateInput={updateInput}
       updateVidURL={updateVidURL}/>
+
+      {finalInput && <YoutubeVidContainer
+      finalInput={finalInput}/>}
+
       <UserVidContainer />
       <VidControlsContainer />
-      <YoutubeVidContainer />
 
-      { currentInput }
-      { youtubeURL }
     </div>
   );
 }
