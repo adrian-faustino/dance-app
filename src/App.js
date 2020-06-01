@@ -5,14 +5,15 @@ import './App.css';
 import {
   UserVidContainer,
   VidControlsContainer,
-  YoutubeVidContainer
+  YoutubeVidContainer,
+  SearchField
 } from './components';
 
 // Helpers
 import { AppHelpers } from './helpers';
 
 // Destructure
-const { test } = AppHelpers;
+const { updateInput, updateVidURL } = AppHelpers;
 
 // constants
 const YT_API_KEY = process.env.REACT_APP_YT_API_KEY;
@@ -29,15 +30,17 @@ function App() {
   return (
     <div className="App">
       
-      <button
-      onClick={() => {
-        
-      }}
-      >Test</button>
-
+      <SearchField
+      currentInput={currentInput}
+      setState={setState}
+      updateInput={updateInput}
+      updateVidURL={updateVidURL}/>
       <UserVidContainer />
       <VidControlsContainer />
       <YoutubeVidContainer />
+
+      { currentInput }
+      { youtubeURL }
     </div>
   );
 }
