@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import YouTube from 'react-youtube';
+import { Slider } from 'react-compound-slider';
 
 // helpers
 import { YT_API_Helpers } from '../helpers';
@@ -21,12 +22,14 @@ export default function YoutubeVidContainer(props) {
 
   // state
   const [state, setState] = useState({
+    player: null,
     videoID: null,
     start: 3,
     end: 8,
     controls: 1,
+    looping: true
   });
-  const { videoID, start, end, controls } = state;
+  const { player, videoID, start, end, controls, looping } = state;
 
 
   // handle user video search input
@@ -65,7 +68,17 @@ export default function YoutubeVidContainer(props) {
       <YouTube 
       videoId={videoID} 
       opts={opts} 
-      onEnd={e => loopStart(e, start)} />
+      onEnd={looping ? () => loopStart(player, start) : null}
+      onReady={e => {
+        const player = e.target;
+        setState(prev => ({...prev, player}));
+      }}/>
+
+      <button onClick={e => {
+        e.preventDefault();
+        console.log(player);
+        console.log('CLICKED =>', player.getDuration());
+      }}>click me!</button>
     </div>
   )
 }

@@ -31,8 +31,8 @@ const setPlayer = () => {
 };
 
 
-const loopStart = (e, start) => {
-  e.target.seekTo(start);
+const loopStart = (player, start) => {
+  player.seekTo(start);
 };
 
 const YT_API_Helpers = {
