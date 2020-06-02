@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import YouTube from 'react-youtube';
-import { Slider } from 'react-compound-slider';
+import { VidControlsContainer } from '.';
 
 // helpers
 import { YT_API_Helpers } from '../helpers';
@@ -73,6 +73,8 @@ export default function YoutubeVidContainer(props) {
         const player = e.target;
         setState(prev => ({...prev, player}));
       }}/>
+
+      <VidControlsContainer />
 
       <button onClick={e => {
         e.preventDefault();

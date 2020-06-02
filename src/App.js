@@ -4,7 +4,6 @@ import './App.css';
 // Containers
 import {
   UserVidContainer,
-  VidControlsContainer,
   YoutubeVidContainer,
   SearchField
 } from './components';
@@ -40,7 +39,6 @@ function App() {
       finalInput={finalInput}/>}
 
       <UserVidContainer />
-      <VidControlsContainer />
 
     </div>
   );
