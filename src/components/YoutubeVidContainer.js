@@ -61,7 +61,8 @@ export default function YoutubeVidContainer(props) {
       controls,
       start,
       end,
-      autoplay: 1
+      autoplay: 1,
+
     },
   };
 
@@ -92,7 +93,7 @@ export default function YoutubeVidContainer(props) {
         e.preventDefault();
         console.log(player);
         console.log('CLICKED =>', player.getDuration());
-        console.log('viddata', player.showVideoInfo());
+        console.log('viddata', player.getAvailablePlaybackRates());
       }}>click me!</button>
     </div>
   )
