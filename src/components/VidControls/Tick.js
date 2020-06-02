@@ -1,4 +1,7 @@
 import React from 'react'
+import { YT_API_Helpers } from '../../helpers';
+
+const { formatS } = YT_API_Helpers;
 
 export default function Tick({ tick, count }) {
   return (
@@ -25,7 +28,7 @@ export default function Tick({ tick, count }) {
           left: `${tick.percent}%`,
         }}
       >
-        {tick.value}
+        {formatS(tick.value)}
       </div>
     </div>
   )

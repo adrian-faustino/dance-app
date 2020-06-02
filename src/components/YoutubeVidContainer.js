@@ -7,7 +7,7 @@ import { VidControlsContainer } from '.';
 import { YT_API_Helpers } from '../helpers';
 
 // destructure
-const { parseVideoID, loopStart, setStart, setEnd, setVidLength } = YT_API_Helpers;
+const { parseVideoID, loopStart, setVidLength } = YT_API_Helpers;
 
 // constants
 const YT_API_KEY = process.env.REACT_APP_YT_API_KEY;
@@ -26,8 +26,8 @@ export default function YoutubeVidContainer(props) {
     videoID: null,
     start: 3,
     end: 8,
-    controls: 1,
-    looping: true,
+    controls: 1, // controls show on player or not
+    looping: true, // change if user doesn't want looping
     vidLength: null
   });
   const { player, videoID, start, end, controls, looping, vidLength } = state;
@@ -79,7 +79,13 @@ export default function YoutubeVidContainer(props) {
         setState(prev => ({...prev, player}));
       }}/>
 
-      {vidLength && (<VidControlsContainer/>)}
+      {vidLength && (
+      <VidControlsContainer
+      start={start}
+      end={end}
+      vidLength={vidLength}
+      player={player}
+      setState={setState}/>)}
 
 
       <button onClick={e => {

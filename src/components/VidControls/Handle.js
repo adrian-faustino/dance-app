@@ -1,5 +1,8 @@
 import React from 'react';
 import './Handle.css';
+import { YT_API_Helpers } from '../../helpers';
+
+const { formatS } = YT_API_Helpers;
 
 export  default function Handle({
   handle: { id, value, percent },
@@ -13,7 +16,7 @@ export  default function Handle({
         marginLeft: -15,
         marginTop: 25,
         zIndex: 2,
-        width: 30,
+        width: 40,
         height: 30,
         border: 0,
         textAlign: 'center',
@@ -25,7 +28,7 @@ export  default function Handle({
       {...getHandleProps(id)}
     >
       <div style={{ fontFamily: 'Roboto', fontSize: 11, marginTop: -35 }}>
-        {value}
+        {formatS(value)}
       </div>
     </div>
   )

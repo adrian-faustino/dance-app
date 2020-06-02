@@ -1,11 +1,17 @@
 import React from 'react'
 import { MainSlider } from './VidControls';
 
-export default function VidControlsContainer() {
+export default function VidControlsContainer(props) {
+
+  const { start, end, vidLength, player, setState } = props;
+
   return (
     <div>
-      From VidControlsContainer.js
-      <MainSlider />
+      <MainSlider
+      start={start}
+      end={end}
+      vidLength={vidLength}
+      setState={setState}/>
     </div>
   )
 }
