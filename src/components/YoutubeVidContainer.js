@@ -7,7 +7,7 @@ import { VidControlsContainer } from '.';
 import { YT_API_Helpers } from '../helpers';
 
 // destructure
-const { parseVideoID, loopStart } = YT_API_Helpers;
+const { parseVideoID, loopStart, setStart, setEnd, setVidLength } = YT_API_Helpers;
 
 // constants
 const YT_API_KEY = process.env.REACT_APP_YT_API_KEY;
@@ -27,9 +27,10 @@ export default function YoutubeVidContainer(props) {
     start: 3,
     end: 8,
     controls: 1,
-    looping: true
+    looping: true,
+    vidLength: null
   });
-  const { player, videoID, start, end, controls, looping } = state;
+  const { player, videoID, start, end, controls, looping, vidLength } = state;
 
 
   // handle user video search input
@@ -59,7 +60,8 @@ export default function YoutubeVidContainer(props) {
     playerVars: {
       controls,
       start,
-      end
+      end,
+      autoplay: 1
     },
   };
 
@@ -69,17 +71,22 @@ export default function YoutubeVidContainer(props) {
       videoId={videoID} 
       opts={opts} 
       onEnd={looping ? () => loopStart(player, start) : null}
+      onStateChange={e => {
+        if (!vidLength) { setVidLength(setState, player.getDuration()) }
+      }}
       onReady={e => {
         const player = e.target;
         setState(prev => ({...prev, player}));
       }}/>
 
-      <VidControlsContainer />
+      {vidLength && (<VidControlsContainer/>)}
+
 
       <button onClick={e => {
         e.preventDefault();
         console.log(player);
         console.log('CLICKED =>', player.getDuration());
+        console.log('viddata', player.showVideoInfo());
       }}>click me!</button>
     </div>
   )

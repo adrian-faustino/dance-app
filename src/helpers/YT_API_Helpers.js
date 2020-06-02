@@ -5,40 +5,37 @@ const parseVideoID = str => {
   return videoID;
 };
 
-const setPlayer = () => {
-  const playerConfig = {
-    // height: '360',
-    // width: '640',
-    // videoId: videoId,
-    // playerVars: {
-    //   autoplay: 1, // Auto-play the video on load
-    //   controls: 0, // Show pause/play buttons in player
-    //   showinfo: 0, // Hide the video title
-    //   modestbranding: 1, // Hide the Youtube Logo
-    //   fs: 1, // Hide the full screen button
-    //   cc_load_policy: 0, // Hide closed captions
-    //   iv_load_policy: 3, // Hide the Video Annotations
-    //   start: startSeconds,
-    //   end: endSeconds,
-    //   autohide: 0, // Hide video controls when playing
-    // },
-    // events: {
-    //   'onStateChange': onStateChange
-    // }
-  };
-
-  // return player = new YT.Player('ytplayer', playerConfig);
-};
-
-
 const loopStart = (player, start) => {
   player.seekTo(start);
 };
 
+const setStart = (setState, e) => {
+  const number = e.target.value;
+  if(isNaN(number)) { return console.log('Enter a number! ')};
+
+  console.log('Setting start time', e.target.value);
+// setState(prev => ({...prev, start: e.target.value}));
+};
+
+const setEnd = (setState, e) => {
+  console.log('Setting end time', e);
+  // setState(prev => ({...prev, end: e.target.value}));
+};
+
+const setVidLength = (setState, vidLength) => {
+  if (vidLength === 0) {
+    return console.log('Invalid video length.');
+  }
+  console.log('Setting vid length:', vidLength);
+  setState(prev => ({...prev, vidLength}));
+}
+
 const YT_API_Helpers = {
   parseVideoID,
-  setPlayer,
-  loopStart
+  loopStart,
+  setStart,
+  setEnd,
+  setVidLength
 };
 
 export default YT_API_Helpers;
