@@ -12,7 +12,7 @@ export default function UserVidContainer(props) {
       navigator.mediaDevices.getUserMedia({ video: true })
         .then(stream => {
           // console.log('reference', captureWindow.current.srcObj)
-          console.log('User accepted stream!', stream.getVideoTracks()[0]);
+          // console.log('User accepted stream!', stream.getVideoTracks()[0]);
           captureWindow.current.srcObject = stream;
           setState(prev => ({...prev, stream}));
         })
