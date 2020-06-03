@@ -2,19 +2,18 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import YouTube from 'react-youtube';
 import { VidControlsContainer } from '.';
+import './YoutubeVidContainer.css';
 
 // helpers
 import { YT_API_Helpers } from '../helpers';
+import constants from '../constants';
 
 // destructure
 const { parseVideoID, loopStart, setVidLength } = YT_API_Helpers;
 
 // constants
 const YT_API_KEY = process.env.REACT_APP_YT_API_KEY;
-
-// yt constants - set 0 to disable
-const PLAYER_HEIGHT = 390;
-const PLAYER_WIDTH = 640;
+const { WINDOW_WIDTH, WINDOW_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT } = constants;
 
 
 export default function YoutubeVidContainer(props) {
@@ -94,11 +93,14 @@ export default function YoutubeVidContainer(props) {
       setState={setState}/>)}
 
 
-      <button onClick={e => {
+      <button 
+      style={{zIndex: 90}}
+      onClick={e => {
         e.preventDefault();
         console.log(player);
         console.log('CLICKED =>', player.getDuration());
         console.log('viddata', player.getCurrentTime());
+        console.log('Window width', WINDOW_WIDTH);
       }}>click me!</button>
     </div>
   )

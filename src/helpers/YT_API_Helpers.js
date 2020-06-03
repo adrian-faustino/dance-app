@@ -46,11 +46,11 @@ const formatS = totalS => {
   const timeObj = formatMS(inMS);
 
   const { h, m, s, ms } = timeObj;
-  const _h = h === 0 ? '' : h.toString().length < 2 ? `0${h}h` : `${h}h`;
-  const _m = m.toString().length < 2 ? `0${m}m` : `${m}m`;
-  const _s = s.toString().length < 2 ? `0${s}s` : `${s}s`;
+  const _h = h === 0 ? '' : h.toString().length < 2 ? `0${h}:` : `${h}:`;
+  const _m = m.toString().length < 2 ? `0${m}:` : `${m}:`;
+  const _s = s.toString().length < 2 ? `0${s}` : `${s}`;
 
-  const formattedTime = `${_h} ${_m} ${_s}`.trim();
+  const formattedTime = `${_h}${_m}${_s}`.trim();
   return formattedTime;
 };
 

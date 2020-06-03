@@ -14,7 +14,7 @@ export default function MainSlider(props) {
     position: 'relative',
     width: '100%',
     height: 80,
-    border: '1px solid steelblue',
+    // border: '1px solid steelblue',
   }
   
   const railStyle = {
@@ -72,7 +72,7 @@ export default function MainSlider(props) {
           )}
         </Tracks>
         <Ticks 
-        count={15 /* generate approximately 15 ticks within the domain */}>
+        count={10 /* generate approximately 15 ticks within the domain */}>
           {({ ticks }) => (
             <div className="slider-ticks">
               {ticks.map(tick => (

@@ -16,8 +16,8 @@ export  default function Handle({
         marginLeft: -15,
         marginTop: 25,
         zIndex: 2,
-        width: 40,
-        height: 30,
+        width: 40,  // radius of handle
+        height: 30, // radius of handle
         border: 0,
         textAlign: 'center',
         cursor: 'pointer',
@@ -27,7 +27,7 @@ export  default function Handle({
       }}
       {...getHandleProps(id)}
     >
-      <div style={{ fontFamily: 'Roboto', fontSize: 11, marginTop: -35 }}>
+      <div style={{ fontFamily: 'Roboto', fontSize: 11, marginTop: -15 }}>
         {formatS(value)}
       </div>
     </div>

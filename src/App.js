@@ -36,12 +36,14 @@ function App() {
       updateInput={updateInput}
       updateVidURL={updateVidURL}/>
 
-      {finalInput && <YoutubeVidContainer
-      finalInput={finalInput}/>}
+      <div className="App__media-container">
+        <YoutubeVidContainer
+        finalInput={finalInput}/>
 
-      <UserVidContainer
-      stream={stream}
-      setState={setState}/>
+        <UserVidContainer
+        stream={stream}
+        setState={setState}/>
+      </div>
 
     </div>
   );

@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import { MainSlider } from './VidControls';
+import constants from '../constants';
+import './VidControlsContainer.css'
 
 export default function VidControlsContainer(props) {
 
@@ -11,19 +13,25 @@ export default function VidControlsContainer(props) {
       <button key={rate} onClick={e =>{
         e.preventDefault();
         player.setPlaybackRate(rate);
-      }}>{rate}</button>
+      }}>{rate * 100 + '%'}</button>
     ));
   
+  const _style = {
+    width: constants.PLAYER_WIDTH * 0.95
+  }
 
   return (
-    <div>
+    <div 
+    className="VidControlsContainer__main-container"
+    style={_style}>
       <MainSlider
       start={start}
       end={end}
       vidLength={vidLength}
       setState={setState}/>
 
-      <div>
+      <span>Video Speed</span>
+      <div className="VidControlsContainer__speed-buttons">
         {playbackButtons}
       </div>
     </div>
