@@ -17,7 +17,7 @@ export default function VidControlsContainer(props) {
     ));
   
   const _style = {
-    width: constants.PLAYER_WIDTH * 0.95
+    width: constants.PLAYER_WIDTH * 0.95,
   }
 
   return (

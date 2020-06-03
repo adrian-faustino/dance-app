@@ -3,6 +3,7 @@ import axios from 'axios';
 import YouTube from 'react-youtube';
 import { VidControlsContainer } from '.';
 import './YoutubeVidContainer.css';
+import { Spinner } from 'reactstrap';
 
 // helpers
 import { YT_API_Helpers } from '../helpers';
@@ -13,7 +14,7 @@ const { parseVideoID, loopStart, setVidLength } = YT_API_Helpers;
 
 // constants
 const YT_API_KEY = process.env.REACT_APP_YT_API_KEY;
-const { WINDOW_WIDTH, WINDOW_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT } = constants;
+const { WINDOW_WIDTH, WINDOW_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT, SPINNER_RADIUS } = constants;
 
 
 export default function YoutubeVidContainer(props) {
@@ -84,14 +85,14 @@ export default function YoutubeVidContainer(props) {
         setState(prev => ({...prev, player}));
       }}/>
 
-      {vidLength && (<>
+      {vidLength ? (<>
       <span className="YoutubeVidContainer__label label">Loop Range</span>
       <VidControlsContainer
       start={start}
       end={end}
       vidLength={vidLength}
       player={player}
-      setState={setState}/></>)}
+      setState={setState}/></>) : <Spinner style={SPINNER_RADIUS} color="secondary"/>}
 
 
       {/* <button 

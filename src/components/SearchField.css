@@ -1,0 +1,26 @@
+.SearchField__form {
+  position: relative;
+  background: rgba(44, 72, 112, 0.934);
+  width: 90%;
+  padding: 0.5em;
+  margin: 1em auto;
+  border-radius: 5px;
+}
+
+.SearchField__input,
+.SearchField__button {
+  border: none;
+  outline: none;
+  padding: 0.3em 0.5em;
+  font-size: 20px;
+}
+
+.SearchField__input {
+  width: 50%;
+  border-radius: 5px 0 0 5px;
+  box-shadow: inset 0 0 5px black;
+}
+
+.SearchField__button {
+  border-radius: 0 5px 5px 0;
+}

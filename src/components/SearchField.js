@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import './SearchField.css';
 
 export default function SearchField(props) {
 
@@ -10,14 +11,20 @@ export default function SearchField(props) {
   const formSubmitHandler = e => {
     e.preventDefault();
     updateVidURL(setState, currentInput);
+    updateInput(setState, '');
   }
 
   return (
-    <form onSubmit={formSubmitHandler}>
+    <form 
+    className="SearchField__form"
+    onSubmit={formSubmitHandler}>
       <input
+      value={currentInput}
+      className="SearchField__input"
       onChange={e => updateInput(setState, e.target.value)}
       placeholder={_placeholder}/>
-      <button>search</button>
+      <button
+      className="SearchField__button">Search</button>
     </form>
   )
 }
