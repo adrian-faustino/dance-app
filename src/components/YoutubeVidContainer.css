@@ -4,3 +4,7 @@
   /* margin: 0 auto;
   z-index: 30; */
 }
+
+.YoutubeVidContainer__label {
+  margin-bottom: -15px;
+}

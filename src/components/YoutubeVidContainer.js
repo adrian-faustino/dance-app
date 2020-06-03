@@ -22,9 +22,9 @@ export default function YoutubeVidContainer(props) {
   // state
   const [state, setState] = useState({
     player: null,
-    videoID: null,
+    videoID: '0b_L1CzZTwI',
     start: 0,
-    end: 5,
+    end: 280,
     controls: 1, // controls show on player or not
     looping: true, // change if user doesn't want looping
     vidLength: null
@@ -84,16 +84,17 @@ export default function YoutubeVidContainer(props) {
         setState(prev => ({...prev, player}));
       }}/>
 
-      {vidLength && (
+      {vidLength && (<>
+      <span className="YoutubeVidContainer__label label">Loop Range</span>
       <VidControlsContainer
       start={start}
       end={end}
       vidLength={vidLength}
       player={player}
-      setState={setState}/>)}
+      setState={setState}/></>)}
 
 
-      <button 
+      {/* <button 
       style={{zIndex: 90}}
       onClick={e => {
         e.preventDefault();
@@ -101,7 +102,7 @@ export default function YoutubeVidContainer(props) {
         console.log('CLICKED =>', player.getDuration());
         console.log('viddata', player.getCurrentTime());
         console.log('Window width', WINDOW_WIDTH);
-      }}>click me!</button>
+      }}>click me!</button> */}
     </div>
   )
 }

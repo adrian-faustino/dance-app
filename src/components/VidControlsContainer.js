@@ -10,7 +10,7 @@ export default function VidControlsContainer(props) {
   const playbackButtons = player
     .getAvailablePlaybackRates()
     .map(rate => (
-      <button key={rate} onClick={e =>{
+      <button className="standard-btn button" key={rate} onClick={e =>{
         e.preventDefault();
         player.setPlaybackRate(rate);
       }}>{rate * 100 + '%'}</button>
@@ -30,7 +30,9 @@ export default function VidControlsContainer(props) {
       vidLength={vidLength}
       setState={setState}/>
 
-      <span>Video Speed</span>
+      <hr />
+
+      <span className="label">Playback Speed</span>
       <div className="VidControlsContainer__speed-buttons">
         {playbackButtons}
       </div>

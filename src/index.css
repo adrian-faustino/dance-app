@@ -13,3 +13,33 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* constants and themes */
+button.button {
+  color: rgba(255, 255, 255, 0.886);
+  padding: 5px 10px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 18px;
+  margin: 0.5em 0.3em;
+}
+
+button.standard-btn {
+  background: #2C4870;
+}
+
+button.danger-btn {
+  background: red;
+}
+
+button.positive-btn {
+  background: green;
+}
+
+span.label {
+  font-weight: bold;
+  font-size: 1.5em;
+  display: block;
+}

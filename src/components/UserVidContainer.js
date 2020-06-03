@@ -34,7 +34,7 @@ export default function UserVidContainer(props) {
     console.log('Stopped recording...')
   }
 
-  const openCam = e => {
+  const enableCam = e => {
     e.preventDefault();
 
     navigator.mediaDevices.getUserMedia({ video: { width: PLAYER_WIDTH, height: PLAYER_HEIGHT } })
@@ -45,7 +45,7 @@ export default function UserVidContainer(props) {
       .catch(err => console.log(err));
   }
 
-  const closeCam = e => {
+  const disableCam = e => {
     e.preventDefault();
     stream.getVideoTracks()[0].stop();
     setState(prev => ({...prev, stream: null}));
@@ -67,10 +67,10 @@ export default function UserVidContainer(props) {
         </video>
       </div>
       
-      <button onClick={startRecord}>Record</button>
-      <button onClick={stopRecord}>Stop</button>
-      <button onClick={closeCam}>Enable Camera</button>
-      <button onClick={openCam}>Disable Camera</button>
+      <button className="positive-btn button" onClick={startRecord}>Record</button>
+      <button className="danger-btn button" onClick={stopRecord}>Stop</button>
+      <button className="standard-btn button" onClick={enableCam}>Enable Camera</button>
+      <button className="standard-btn button" onClick={disableCam}>Disable Camera</button>
     </div>
   )
 }

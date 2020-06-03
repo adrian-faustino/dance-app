@@ -9,20 +9,10 @@
 }
 
 .VidControlsContainer__speed-buttons > button {
-  margin: 0 0.3em;
-  padding: 5px 10px;
-  border: none;
-  outline: none;
-  border-radius: 5px;
-  background: #2C4870;
-  text-align: center;
-  font-size: 18px;
-  color: rgba(255, 255, 255, 0.886);
-
-  transition: all 0.5s;
+  transition: all 0.4s;
 }
 
 .VidControlsContainer__speed-buttons > button:hover {
   background: rgba(23, 140, 148, 0.829);
-  box-shadow: 0 0 5px black;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.753);
 }
