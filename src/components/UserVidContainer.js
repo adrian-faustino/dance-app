@@ -24,7 +24,6 @@ export default function UserVidContainer(props) {
   const startRecord = e => {
     e.preventDefault();
     console.log('Started recording...')
-    // console.log(stream.getVideoTracks()[0].getConstraints());
   }
 
   const stopRecord = e => {
@@ -32,9 +31,21 @@ export default function UserVidContainer(props) {
     console.log('Stopped recording...')
   }
 
+  const openCam = e => {
+    e.preventDefault();
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        captureWindow.current.srcObject = stream;
+        setState(prev => ({...prev, stream}));
+      })
+      .catch(err => console.log(err));
+  }
+
   const closeCam = e => {
     e.preventDefault();
     stream.getVideoTracks()[0].stop();
+    setState(prev => ({...prev, stream: null}));
   }
 
   return (
@@ -47,7 +58,8 @@ export default function UserVidContainer(props) {
       
       <button onClick={startRecord}>Record</button>
       <button onClick={stopRecord}>Stop</button>
-      <button onClick={closeCam}>Close cam</button>
+      <button onClick={closeCam}>Enable Camera</button>
+      <button onClick={openCam}>Disable Camera</button>
     </div>
   )
 }
