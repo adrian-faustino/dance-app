@@ -5,12 +5,6 @@ import './MainSlider.css';
 // subcomponents
 import { Handle, Track, Tick } from '.';
 
-// helpers
-import { YT_API_Helpers } from '../../helpers';
-
-// destructure
-const { formatS } = YT_API_Helpers;
-
 export default function MainSlider(props) {
 
   const { start, end, vidLength, setState } = props;
@@ -32,11 +26,6 @@ export default function MainSlider(props) {
     backgroundColor: '#8B9CB6',
   }
 
-  /** FORMATTED TIMES: seconds => minutes **/
-  const _start = formatS(start);
-  const _end = formatS(end);
-  const _vidLength = formatS(vidLength);
-  
   return (
     <div>
     <Slider
@@ -44,7 +33,7 @@ export default function MainSlider(props) {
         domain={[0, vidLength]}
         step={1}
         mode={2}
-        values={[start, end] /* three values = three handles */}
+        values={[start, vidLength * 0.9] /* three values = three handles */}
         onChange={e => {
           const [start, end] = e;
           setState(prev => ({...prev, start, end}));

@@ -20,11 +20,12 @@ const YT_API_KEY = process.env.REACT_APP_YT_API_KEY;
 function App() {
 
   const [state, setState] = useState({
-    currentInput: '',
-    finalInput: null,
+    currentInput: '', // user URL input
+    finalInput: null, // user URL input
+    stream: ''
   });
 
-  const { currentInput, finalInput } = state;
+  const { currentInput, finalInput, stream } = state;
 
   return (
     <div className="App">
@@ -38,7 +39,9 @@ function App() {
       {finalInput && <YoutubeVidContainer
       finalInput={finalInput}/>}
 
-      <UserVidContainer />
+      <UserVidContainer
+      stream={stream}
+      setState={setState}/>
 
     </div>
   );

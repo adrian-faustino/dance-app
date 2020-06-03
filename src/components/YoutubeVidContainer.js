@@ -24,8 +24,8 @@ export default function YoutubeVidContainer(props) {
   const [state, setState] = useState({
     player: null,
     videoID: null,
-    start: 3,
-    end: 8,
+    start: 0,
+    end: 5,
     controls: 1, // controls show on player or not
     looping: true, // change if user doesn't want looping
     vidLength: null
@@ -52,6 +52,12 @@ export default function YoutubeVidContainer(props) {
     }
   }, [finalInput]);
 
+  // Reset all the values whenever a user sets new video
+  useEffect(() => {
+    console.log('Resetting video length.');
+    setState(prev => ({...prev, vidLength: null}));
+  }, [videoID]);
+
 
   // YT Player settings
   const opts = {
@@ -62,7 +68,6 @@ export default function YoutubeVidContainer(props) {
       start,
       end,
       autoplay: 1,
-
     },
   };
 
@@ -73,7 +78,7 @@ export default function YoutubeVidContainer(props) {
       opts={opts} 
       onEnd={looping ? () => loopStart(player, start) : null}
       onStateChange={e => {
-        if (!vidLength) { setVidLength(setState, player.getDuration()) }
+        if (!vidLength) setVidLength(setState, player.getDuration());
       }}
       onReady={e => {
         const player = e.target;
@@ -93,7 +98,7 @@ export default function YoutubeVidContainer(props) {
         e.preventDefault();
         console.log(player);
         console.log('CLICKED =>', player.getDuration());
-        console.log('viddata', player.getAvailablePlaybackRates());
+        console.log('viddata', player.getCurrentTime());
       }}>click me!</button>
     </div>
   )

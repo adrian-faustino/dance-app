@@ -8,7 +8,7 @@ export default function VidControlsContainer(props) {
   const playbackButtons = player
     .getAvailablePlaybackRates()
     .map(rate => (
-      <button onClick={e =>{
+      <button key={rate} onClick={e =>{
         e.preventDefault();
         player.setPlaybackRate(rate);
       }}>{rate}</button>
