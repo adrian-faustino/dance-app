@@ -58,6 +58,8 @@ export default function YoutubeVidContainer(props) {
     setState(prev => ({...prev, vidLength: null}));
   }, [videoID]);
 
+  // Pause when
+
 
   // YT Player settings
   const opts = {

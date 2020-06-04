@@ -38,6 +38,10 @@ button.positive-btn {
   background: green;
 }
 
+button.disabled-btn {
+  background: grey;
+}
+
 span.label {
   font-weight: bold;
   font-size: 1.5em;

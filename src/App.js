@@ -26,6 +26,7 @@ function App() {
     mediaRecorder: null, // to record video
     videoURL: null, // chunks put together --> pass to canvas/video
     isRecording: false,
+    cameraEnabled: false,
   });
 
   const { currentInput, finalInput, stream } = state;
@@ -40,6 +41,8 @@ function App() {
         <UserVidContainer
         state={state}
         setState={setState}/>
+
+        <div></div>
 
         <SearchField
         currentInput={currentInput}
