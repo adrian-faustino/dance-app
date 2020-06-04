@@ -22,7 +22,10 @@ function App() {
   const [state, setState] = useState({
     currentInput: '', // user URL input as user types
     finalInput: null, // user URL input as user submits
-    stream: ''
+    stream: '',
+    mediaRecorder: null, // to record video
+    videoURL: null, // chunks put together --> pass to canvas/video
+    isRecording: false,
   });
 
   const { currentInput, finalInput, stream } = state;
@@ -35,7 +38,7 @@ function App() {
         finalInput={finalInput}/>
 
         <UserVidContainer
-        stream={stream}
+        state={state}
         setState={setState}/>
 
         <SearchField
