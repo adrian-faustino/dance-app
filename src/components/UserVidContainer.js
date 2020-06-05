@@ -5,17 +5,23 @@ import { Spinner } from 'reactstrap';
 import { myPlayerHelpers } from '../helpers';
 
 const { PLAYER_WIDTH, PLAYER_HEIGHT } = constants;
-const { closeReplay, handleFullScreen, toggleLoop } = myPlayerHelpers;
+const { closeReplay, handleFullScreen, toggleLoop, togglePlay } = myPlayerHelpers;
 
 export default function UserVidContainer(props) {
 
   const { state, setState } = props;
   const { stream, mediaRecorder, isRecording, videoURL, cameraEnabled, myPlayerOpts } = state;
-  const { isLooping, isMirrored } = myPlayerOpts;
+  const { isLooping, isMirrored, isPlaying } = myPlayerOpts;
 
   const captureWindow = useRef();
   const replayWindow = useRef();
   const replayWindowParent = useRef();
+
+  // handle myPlayer Play/Pause
+  useEffect(() => {
+    if (!replayWindow.current) return;
+    isPlaying ? replayWindow.current.pause() : replayWindow.current.play();
+  }, [isPlaying]);
 
   const handleDataAvailable = e => {
     const chunks = [e.data];
@@ -106,6 +112,7 @@ export default function UserVidContainer(props) {
       </div>
 
       {videoURL && 
+      /** UserVid Control Buttons **/
       <div
       ref={replayWindowParent}
       className={`UserVidContainer__replay-container`}>
@@ -114,12 +121,19 @@ export default function UserVidContainer(props) {
           <button 
           className="UserVidContainer__close-replay-btn"
           onClick={e => closeReplay({e, setState})}>x</button>
+
+          <div>Time Bar</div>
+
+          <button onClick={e => togglePlay({e, isPlaying, setState})}>{isPlaying ? 'Play' : 'Pause'}</button>
+          <button onClick={''}>Play</button>
+          <button onClick={''}>Play</button>
           <button onClick={''}>Play</button>
           <button onClick={''}>Pause</button>
         </div>
     
 
         <video
+        onEnded={e => togglePlay({ e, isPlaying, setState })}
         loop={isLooping}
         className={`UserVidContainer__replay-window ${isMirrored && 'mirrored'}`}
         controls={true}
@@ -164,11 +178,7 @@ export default function UserVidContainer(props) {
         // replayWindow.current.loop = toggleLoop({e, isLooping, setState});
 
         // mirror
-        setState(prev => ({...prev, myPlayerOpts: { isMirrored: !isMirrored}}))
-        
-
-        // replayWindow.current.videoHeight='100vh';
-        // replayWindow.current.videoWidth='100vw'
+        // setState(prev => ({...prev, myPlayerOpts: { isMirrored: !isMirrored}}))
       }}>Jump time</button>
 
     </div>

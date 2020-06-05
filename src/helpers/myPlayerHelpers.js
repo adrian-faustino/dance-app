@@ -17,10 +17,17 @@ const toggleLoop = vars => {
   setState(prev => ({...prev, myPlayerOpts: { isLooping: !isLooping}}));
 }
 
+const togglePlay = vars => {
+  const { e, isPlaying, setState } = vars;
+  e.preventDefault();
+  setState(prev => ({...prev, myPlayerOpts: { isPlaying: !isPlaying}}));
+}
+
 const myPlayerHelpers = {
   closeReplay,
   handleFullScreen,
-  toggleLoop
+  toggleLoop,
+  togglePlay
 };
 
 export default myPlayerHelpers;
