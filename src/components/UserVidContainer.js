@@ -14,21 +14,20 @@ export default function UserVidContainer(props) {
 
   const { state, setState } = props;
   const { stream, mediaRecorder, isRecording, videoURL, cameraEnabled, myPlayerOpts } = state;
-  const { isLooping, isMirrored, isPlaying, currentTime, currentTimeTickInterval } = myPlayerOpts;
+  const { isLooping, isMirrored, isPlaying, currentTime } = myPlayerOpts;
 
   const captureWindow = useRef();
   const replayWindow = useRef();
   const replayWindowParent = useRef();
 
-  // handle myPlayer Play/Pause
+  // handle myPlayer Play/Pause - Replay video custom buttons
   useEffect(() => {
     if (!replayWindow.current) return;
     isPlaying ? replayWindow.current.pause() : replayWindow.current.play();
-    if (isPlaying) {
-      clearCurrentTime(currentTimeTickInterval, myPlayerOpts, setState);
-    }
   }, [isPlaying]);
 
+  
+  /** START: mediaRecorder set up (to record user webcame) **/
   const handleDataAvailable = e => {
     const chunks = [e.data];
     const blob = new Blob(chunks, { type : 'video/mp4;' });
@@ -36,15 +35,16 @@ export default function UserVidContainer(props) {
 
     setState(prev => ({...prev, videoURL}));
   }
-
-  // listener for data chunks
+  
   useEffect(() => {
     if (mediaRecorder) {
       mediaRecorder.ondataavailable = handleDataAvailable;
     }
   }, [mediaRecorder]);
+  /** END: mediaRecorder set up (to record user webcame) **/
 
-  // record buttons
+
+  /** START: Record buttons helper functions **/
   const startRecord = e => {
     e.preventDefault();
     if (!isRecording && cameraEnabled) {
@@ -86,7 +86,9 @@ export default function UserVidContainer(props) {
       setState(prev => ({...prev, stream: null, mediaRecorder: null, cameraEnabled: false}));
     }
   }
+  /** END: Record buttons helper functions **/
 
+  // Video Player dimensions
   const videoDimensions = {
     width: PLAYER_WIDTH,
     height: PLAYER_HEIGHT,
@@ -122,14 +124,6 @@ export default function UserVidContainer(props) {
           
           {/* PLAY/PAUSE */}
           <button onClick={e => {
-            if (!currentTimeTickInterval) {
-              const currentTimeTickInterval = setInterval(() => {
-                console.log('ticking...');
-                // setCurrentTime(replayWindow, myPlayerOpts, setState);
-              }, 1000);
-              console.log('My interval:', currentTimeTickInterval);
-              updateInterval(currentTimeTickInterval, myPlayerOpts, setState);
-            }
             togglePlay({e, isPlaying, myPlayerOpts, setState})}}>{isPlaying ? 'Play' : 'Pause'}</button>
           {/* LOOP TOGGLE */}
           <button onClick={e => toggleLoop({e, isLooping, myPlayerOpts, setState})}>{isLooping ? 'Stop Loop' : 'Loop'}</button>
@@ -137,12 +131,12 @@ export default function UserVidContainer(props) {
           <button onClick={e => toggleMirrored({e, isMirrored, myPlayerOpts, setState})}>{isMirrored ? 'Stop Mirror' : 'Mirror'}</button>
         
         </div>
-    
+        {currentTime}
 
         <video
+        onTimeUpdate={e => setCurrentTime(e.target, myPlayerOpts, setState)}
         onEnded={e => {
           console.log('Video ended!')
-          // clearCurrentTime(currentTimeTickInterval, myPlayerOpts, setState);
           togglePlay({ e, isPlaying, myPlayerOpts, setState })}}
         loop={isLooping}
         className={`UserVidContainer__replay-window ${isMirrored && 'mirrored'}`}
@@ -167,29 +161,6 @@ export default function UserVidContainer(props) {
         className="spinner-grow"/>
         <span>Recording...</span>
       </div>)}
-
-      <button onClick={e => {
-        e.preventDefault();
-        console.log('works', replayWindow);
-        // jump to time
-        // replayWindow.current.currentTime=10;
-
-        // full screen
-        // replayWindowParent.current.requestFullscreen();
-        // replayWindowParent.current.onfullscreenchange = e => handleFullScreen({e, replayWindow});
-
-        // play
-        // replayWindow.current.play();
-
-        // pause
-        // replayWindow.current.pause();
-
-        // loop
-        // replayWindow.current.loop = toggleLoop({e, isLooping, setState});
-
-        // mirror
-        // setState(prev => ({...prev, myPlayerOpts: { isMirrored: !isMirrored}}))
-      }}>Jump time</button>
 
     </div>
   )

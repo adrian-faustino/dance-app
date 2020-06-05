@@ -52,28 +52,10 @@ const handleTimebar = vars => {
   // }, 1000);
 }
 
-const updateInterval = (currentTimeTickInterval, myPlayerOpts, setState) => {
-  console.log('Creating new tick interval...', currentTimeTickInterval);
-  const _myPlayerOpts = {...myPlayerOpts, currentTimeTickInterval};
-  setState(prev => ({...prev, myPlayerOpts: _myPlayerOpts}));
-}
-
 const setCurrentTime = (replayWindow, myPlayerOpts, setState) => {
-  const currentTimeTickInterval =
-    setInterval(() => {
-    const currentTime = replayWindow.current.currentTime;
-    const _myPlayerOpts = {...myPlayerOpts, currentTime};
-    console.log('Current time:', replayWindow.current.currentTime)
-    setState(prev => ({...prev, myPlayerOpts: _myPlayerOpts, currentTimeTickInterval}));
-    }, 500);
-}
-
-const clearCurrentTime = (currentTimeTickInterval, myPlayerOpts, setState) => {
-  console.log('Interval cleared!', currentTimeTickInterval);
-
-  // This is the hackiest sh*t I've ever used
-  for (let i = 1; i < 99999; i++) { window.clearInterval(i); }
-  const _myPlayerOpts = {...myPlayerOpts, currentTimeTickInterval: null};
+  const currentTime = replayWindow.currentTime;
+  const _myPlayerOpts = {...myPlayerOpts, currentTime};
+  console.log(currentTime)
   setState(prev => ({...prev, myPlayerOpts: _myPlayerOpts}));
 }
 
@@ -85,8 +67,6 @@ const myPlayerHelpers = {
   toggleMirrored,
   handleTimebar,
   setCurrentTime,
-  clearCurrentTime,
-  updateInterval
 };
 
 export default myPlayerHelpers;

@@ -27,7 +27,7 @@ function App() {
     videoURL: null, // chunks put together --> pass to canvas/video
     isRecording: false,
     cameraEnabled: false,
-    myPlayerOpts: { isLooping: false, isMirrored: true, isPlaying: true, currentTime: 0, currentTimeTickInterval: null }
+    myPlayerOpts: { isLooping: false, isMirrored: true, isPlaying: true, currentTime: 0 }
   });
 
   const { currentInput, finalInput, stream } = state;
