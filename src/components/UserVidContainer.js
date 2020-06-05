@@ -4,14 +4,17 @@ import constants from '../constants';
 import { Spinner } from 'reactstrap';
 import { myPlayerHelpers } from '../helpers';
 
+// Constants
 const { PLAYER_WIDTH, PLAYER_HEIGHT } = constants;
-const { closeReplay, handleFullScreen, toggleLoop, togglePlay, toggleMirrored } = myPlayerHelpers;
+
+// myPlayer Helper Functions
+const { closeReplay, handleFullScreen, toggleLoop, togglePlay, toggleMirrored, handleTimebar, setCurrentTime, clearCurrentTime, updateInterval } = myPlayerHelpers;
 
 export default function UserVidContainer(props) {
 
   const { state, setState } = props;
   const { stream, mediaRecorder, isRecording, videoURL, cameraEnabled, myPlayerOpts } = state;
-  const { isLooping, isMirrored, isPlaying } = myPlayerOpts;
+  const { isLooping, isMirrored, isPlaying, currentTime, currentTimeTickInterval } = myPlayerOpts;
 
   const captureWindow = useRef();
   const replayWindow = useRef();
@@ -21,8 +24,10 @@ export default function UserVidContainer(props) {
   useEffect(() => {
     if (!replayWindow.current) return;
     isPlaying ? replayWindow.current.pause() : replayWindow.current.play();
+    if (isPlaying) {
+      clearCurrentTime(currentTimeTickInterval, myPlayerOpts, setState);
+    }
   }, [isPlaying]);
-
 
   const handleDataAvailable = e => {
     const chunks = [e.data];
@@ -110,10 +115,22 @@ export default function UserVidContainer(props) {
           className="UserVidContainer__close-replay-btn"
           onClick={e => closeReplay({e, setState})}>x</button>
 
-          <div>Time Bar</div>
+          {/* TIMEBAR */}
+          <div
+          onClick={e => handleTimebar({e, replayWindow})}
+          className="UserVidContainer__timebar">Time Bar</div>
           
           {/* PLAY/PAUSE */}
-          <button onClick={e => togglePlay({e, isPlaying, myPlayerOpts, setState})}>{isPlaying ? 'Play' : 'Pause'}</button>
+          <button onClick={e => {
+            if (!currentTimeTickInterval) {
+              const currentTimeTickInterval = setInterval(() => {
+                console.log('ticking...');
+                // setCurrentTime(replayWindow, myPlayerOpts, setState);
+              }, 1000);
+              console.log('My interval:', currentTimeTickInterval);
+              updateInterval(currentTimeTickInterval, myPlayerOpts, setState);
+            }
+            togglePlay({e, isPlaying, myPlayerOpts, setState})}}>{isPlaying ? 'Play' : 'Pause'}</button>
           {/* LOOP TOGGLE */}
           <button onClick={e => toggleLoop({e, isLooping, myPlayerOpts, setState})}>{isLooping ? 'Stop Loop' : 'Loop'}</button>
           {/* MIRROR TOGGLE */}
@@ -123,7 +140,10 @@ export default function UserVidContainer(props) {
     
 
         <video
-        onEnded={e => togglePlay({ e, isPlaying, myPlayerOpts, setState })}
+        onEnded={e => {
+          console.log('Video ended!')
+          // clearCurrentTime(currentTimeTickInterval, myPlayerOpts, setState);
+          togglePlay({ e, isPlaying, myPlayerOpts, setState })}}
         loop={isLooping}
         className={`UserVidContainer__replay-window ${isMirrored && 'mirrored'}`}
         controls={true}

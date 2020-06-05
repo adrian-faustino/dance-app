@@ -54,3 +54,8 @@
     opacity: 1;
   }
 }
+
+/* Timebar */
+.UserVidContainer__timebar {
+  background: red;
+}
