@@ -2,16 +2,20 @@ import React, { useEffect, useRef } from 'react'
 import './UserVidContainer.css';
 import constants from '../constants';
 import { Spinner } from 'reactstrap';
+import { myPlayerHelpers } from '../helpers';
 
 const { PLAYER_WIDTH, PLAYER_HEIGHT } = constants;
+const { closeReplay, handleFullScreen, toggleLoop } = myPlayerHelpers;
 
 export default function UserVidContainer(props) {
 
   const { state, setState } = props;
-  const { stream, mediaRecorder, isRecording, videoURL, cameraEnabled } = state;
+  const { stream, mediaRecorder, isRecording, videoURL, cameraEnabled, myPlayerOpts } = state;
+  const { isLooping, isMirrored } = myPlayerOpts;
 
   const captureWindow = useRef();
   const replayWindow = useRef();
+  const replayWindowParent = useRef();
 
   const handleDataAvailable = e => {
     const chunks = [e.data];
@@ -85,11 +89,6 @@ export default function UserVidContainer(props) {
     }
   }
 
-  const closeReplay = e => {
-    e.preventDefault();
-    setState(prev => ({...prev, videoURL: null}));
-  }
-
   const videoDimensions = {
     width: PLAYER_WIDTH,
     height: PLAYER_HEIGHT,
@@ -106,13 +105,23 @@ export default function UserVidContainer(props) {
         </video>
       </div>
 
-      {videoURL && <div className="UserVidContainer__replay-container">
-        <button 
-        className="UserVidContainer__close-replay-btn"
-        onClick={closeReplay}>x</button>
+      {videoURL && 
+      <div
+      ref={replayWindowParent}
+      className={`UserVidContainer__replay-container`}>
+        <div>
+          <span>Replay mode</span>
+          <button 
+          className="UserVidContainer__close-replay-btn"
+          onClick={e => closeReplay({e, setState})}>x</button>
+          <button onClick={''}>Play</button>
+          <button onClick={''}>Pause</button>
+        </div>
+    
 
         <video
-        className="UserVidContainer__replay-window"
+        loop={isLooping}
+        className={`UserVidContainer__replay-window ${isMirrored && 'mirrored'}`}
         controls={true}
         ref={replayWindow}
         style={videoDimensions}
@@ -134,6 +143,33 @@ export default function UserVidContainer(props) {
         className="spinner-grow"/>
         <span>Recording...</span>
       </div>)}
+
+      <button onClick={e => {
+        e.preventDefault();
+        console.log('works', replayWindow);
+        // jump to time
+        // replayWindow.current.currentTime=10;
+
+        // full screen
+        // replayWindowParent.current.requestFullscreen();
+        // replayWindowParent.current.onfullscreenchange = e => handleFullScreen({e, replayWindow});
+
+        // play
+        // replayWindow.current.play();
+
+        // pause
+        // replayWindow.current.pause();
+
+        // loop
+        // replayWindow.current.loop = toggleLoop({e, isLooping, setState});
+
+        // mirror
+        setState(prev => ({...prev, myPlayerOpts: { isMirrored: !isMirrored}}))
+        
+
+        // replayWindow.current.videoHeight='100vh';
+        // replayWindow.current.videoWidth='100vw'
+      }}>Jump time</button>
 
     </div>
   )

@@ -36,6 +36,7 @@ export default function MainSlider(props) {
         values={[start, vidLength * 0.9] /* three values = three handles */}
         onChange={e => {
           const [start, end] = e;
+          console.log('Slider time:', start, end)
           setState(prev => ({...prev, start, end}));
         }}
       >

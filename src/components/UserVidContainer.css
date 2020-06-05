@@ -19,10 +19,10 @@
   top: 0;
 }
 
-.UserVidContainer__replay-window {
+/* .UserVidContainer__replay-window {
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
-}
+} */
 
 .UserVidContainer__close-replay-btn {
   position: absolute;
