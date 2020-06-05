@@ -5,7 +5,7 @@ import { Spinner } from 'reactstrap';
 import { myPlayerHelpers } from '../helpers';
 
 const { PLAYER_WIDTH, PLAYER_HEIGHT } = constants;
-const { closeReplay, handleFullScreen, toggleLoop, togglePlay } = myPlayerHelpers;
+const { closeReplay, handleFullScreen, toggleLoop, togglePlay, toggleMirrored } = myPlayerHelpers;
 
 export default function UserVidContainer(props) {
 
@@ -31,20 +31,6 @@ export default function UserVidContainer(props) {
 
     setState(prev => ({...prev, videoURL}));
   }
-
-  // useEffect(() => {
-  //   if (navigator.mediaDevices.getUserMedia) {
-  //     navigator.mediaDevices.getUserMedia({ video: { width: PLAYER_WIDTH, height: PLAYER_HEIGHT } })
-  //       .then(stream => {
-  //         captureWindow.current.srcObject = stream;
-  //         const mediaRecorder = new MediaRecorder(stream);
-  //         // mediaRecorder.ondataavailable = handleDataAvailable;
-
-  //         setState(prev => ({...prev, stream, mediaRecorder}));
-  //       })
-  //       .catch(err => console.log(err));
-  //   }
-  // }, []);
 
   // listener for data chunks
   useEffect(() => {
@@ -101,6 +87,7 @@ export default function UserVidContainer(props) {
     height: PLAYER_HEIGHT,
   }
 
+
   return (
     <div>
       <div
@@ -126,18 +113,17 @@ export default function UserVidContainer(props) {
           <div>Time Bar</div>
           
           {/* PLAY/PAUSE */}
-          <button onClick={e => togglePlay({e, isPlaying, setState})}>{isPlaying ? 'Play' : 'Pause'}</button>
+          <button onClick={e => togglePlay({e, isPlaying, myPlayerOpts, setState})}>{isPlaying ? 'Play' : 'Pause'}</button>
           {/* LOOP TOGGLE */}
-          <button onClick={e => toggleLoop({e, isLooping, setState})}>{isLooping ? 'Stop Loop' : 'Loop'}</button>
+          <button onClick={e => toggleLoop({e, isLooping, myPlayerOpts, setState})}>{isLooping ? 'Stop Loop' : 'Loop'}</button>
+          {/* MIRROR TOGGLE */}
+          <button onClick={e => toggleMirrored({e, isMirrored, myPlayerOpts, setState})}>{isMirrored ? 'Stop Mirror' : 'Mirror'}</button>
         
-     
-          <button onClick={''}>Play</button>
-          <button onClick={''}>Pause</button>
         </div>
     
 
         <video
-        onEnded={e => togglePlay({ e, isPlaying, setState })}
+        onEnded={e => togglePlay({ e, isPlaying, myPlayerOpts, setState })}
         loop={isLooping}
         className={`UserVidContainer__replay-window ${isMirrored && 'mirrored'}`}
         controls={true}

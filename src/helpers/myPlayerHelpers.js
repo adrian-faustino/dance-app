@@ -12,22 +12,32 @@ const handleFullScreen = vars => {
 }
 
 const toggleLoop = vars => {
-  const { e, isLooping, setState } = vars;
+  const { e, isLooping, myPlayerOpts, setState } = vars;
   e.preventDefault();
-  setState(prev => ({...prev, myPlayerOpts: { isLooping: !isLooping}}));
+  const _myPlayerOpts = {...myPlayerOpts, isLooping: !isLooping};
+  setState(prev => ({ ...prev, myPlayerOpts: _myPlayerOpts }));
 }
 
 const togglePlay = vars => {
-  const { e, isPlaying, setState } = vars;
+  const { e, isPlaying, myPlayerOpts, setState } = vars;
   e.preventDefault();
-  setState(prev => ({...prev, myPlayerOpts: { isPlaying: !isPlaying}}));
+  const _myPlayerOpts = {...myPlayerOpts, isPlaying: !isPlaying};
+  setState(prev => ({ ...prev, myPlayerOpts: _myPlayerOpts }));
+}
+
+const toggleMirrored = vars => {
+  const { e, isMirrored, myPlayerOpts, setState } = vars;
+  e.preventDefault();
+  const _myPlayerOpts = {...myPlayerOpts, isMirrored: !isMirrored};
+  setState(prev => ({ ...prev, myPlayerOpts: _myPlayerOpts }));
 }
 
 const myPlayerHelpers = {
   closeReplay,
   handleFullScreen,
   toggleLoop,
-  togglePlay
+  togglePlay,
+  toggleMirrored
 };
 
 export default myPlayerHelpers;
