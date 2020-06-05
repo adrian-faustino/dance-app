@@ -23,6 +23,7 @@ export default function UserVidContainer(props) {
     isPlaying ? replayWindow.current.pause() : replayWindow.current.play();
   }, [isPlaying]);
 
+
   const handleDataAvailable = e => {
     const chunks = [e.data];
     const blob = new Blob(chunks, { type : 'video/mp4;' });
@@ -123,10 +124,13 @@ export default function UserVidContainer(props) {
           onClick={e => closeReplay({e, setState})}>x</button>
 
           <div>Time Bar</div>
-
+          
+          {/* PLAY/PAUSE */}
           <button onClick={e => togglePlay({e, isPlaying, setState})}>{isPlaying ? 'Play' : 'Pause'}</button>
-          <button onClick={''}>Play</button>
-          <button onClick={''}>Play</button>
+          {/* LOOP TOGGLE */}
+          <button onClick={e => toggleLoop({e, isLooping, setState})}>{isLooping ? 'Stop Loop' : 'Loop'}</button>
+        
+     
           <button onClick={''}>Play</button>
           <button onClick={''}>Pause</button>
         </div>
