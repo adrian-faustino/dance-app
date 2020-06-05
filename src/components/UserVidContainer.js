@@ -8,13 +8,13 @@ import { myPlayerHelpers } from '../helpers';
 const { PLAYER_WIDTH, PLAYER_HEIGHT } = constants;
 
 // myPlayer Helper Functions
-const { closeReplay, handleFullScreen, toggleLoop, togglePlay, toggleMirrored, handleTimebar, setCurrentTime, clearCurrentTime, updateInterval } = myPlayerHelpers;
+const { closeReplay, handleFullScreen, toggleLoop, togglePlay, toggleMirrored, handleTimebar, setCurrentTime, setDuration, getCSSpercent } = myPlayerHelpers;
 
 export default function UserVidContainer(props) {
 
   const { state, setState } = props;
   const { stream, mediaRecorder, isRecording, videoURL, cameraEnabled, myPlayerOpts } = state;
-  const { isLooping, isMirrored, isPlaying, currentTime } = myPlayerOpts;
+  const { isLooping, isMirrored, isPlaying, currentTime, replayDuration } = myPlayerOpts;
 
   const captureWindow = useRef();
   const replayWindow = useRef();
@@ -24,6 +24,9 @@ export default function UserVidContainer(props) {
   useEffect(() => {
     if (!replayWindow.current) return;
     isPlaying ? replayWindow.current.pause() : replayWindow.current.play();
+
+    // set replay video max duration
+    setDuration(replayWindow.current, myPlayerOpts, setState);
   }, [isPlaying]);
 
   
@@ -120,7 +123,12 @@ export default function UserVidContainer(props) {
           {/* TIMEBAR */}
           <div
           onClick={e => handleTimebar({e, replayWindow})}
-          className="UserVidContainer__timebar">Time Bar</div>
+          className="UserVidContainer__timebar">
+            <div style={{
+              width: `${getCSSpercent(currentTime, replayDuration)}`
+            }}
+            className="UserVidContainer__timebar-slider"></div>
+          </div>
           
           {/* PLAY/PAUSE */}
           <button onClick={e => {
@@ -131,7 +139,7 @@ export default function UserVidContainer(props) {
           <button onClick={e => toggleMirrored({e, isMirrored, myPlayerOpts, setState})}>{isMirrored ? 'Stop Mirror' : 'Mirror'}</button>
         
         </div>
-        {currentTime}
+
 
         <video
         onTimeUpdate={e => setCurrentTime(e.target, myPlayerOpts, setState)}
@@ -145,6 +153,7 @@ export default function UserVidContainer(props) {
         style={videoDimensions}
         src={videoURL}>
         </video>
+
       </div>}
 
 
@@ -161,7 +170,7 @@ export default function UserVidContainer(props) {
         className="spinner-grow"/>
         <span>Recording...</span>
       </div>)}
-
+        
     </div>
   )
 }

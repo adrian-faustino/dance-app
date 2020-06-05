@@ -55,7 +55,15 @@
   }
 }
 
-/* Timebar */
+/* Customer timebar logic */
 .UserVidContainer__timebar {
+  height: 5px;
+  width: 100%;
   background: red;
+}
+
+.UserVidContainer__timebar-slider {
+  height: 5px;
+  background: blue;
+  /* width: 55%; Update this to move the timebar */
 }

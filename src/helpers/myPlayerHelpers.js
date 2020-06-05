@@ -59,6 +59,20 @@ const setCurrentTime = (replayWindow, myPlayerOpts, setState) => {
   setState(prev => ({...prev, myPlayerOpts: _myPlayerOpts}));
 }
 
+const setDuration = (replayWindow, myPlayerOpts, setState) => {
+  const replayDuration = replayWindow.duration;
+  console.log('Max time is', replayDuration);
+  const _myPlayerOpts = {...myPlayerOpts, replayDuration};
+  setState(prev => ({...prev, myPlayerOpts: _myPlayerOpts}));
+}
+
+/** Returns a string formatted for CSS i.e `43%` **/
+const getCSSpercent = (min, max) => {
+  console.log(min, max)
+  // console.log('CSS PERCENT!',  ( min / max ) * 100 + '%')
+  return ( min / max ) * 100 + '%';
+}
+
 const myPlayerHelpers = {
   closeReplay,
   handleFullScreen,
@@ -67,6 +81,8 @@ const myPlayerHelpers = {
   toggleMirrored,
   handleTimebar,
   setCurrentTime,
+  setDuration,
+  getCSSpercent
 };
 
 export default myPlayerHelpers;
